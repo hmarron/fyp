@@ -1,17 +1,18 @@
 #include <Servo.h> 
  
 Servo myservo;
-int oldPos = 90;
-int newPos = 90;
+int oldPos = 0;
+int newPos = 0;
  
 void setup() { 
   Serial.begin(9600);
   myservo.attach(9);
+  myservo.write(170);
 } 
  
-void loop() {          
-    newPos = Serial.parseInt();
-    if(oldPos != newPos && newPos != 0){
+void loop() {       
+    newPos = Serial.read();
+    if(oldPos != newPos && newPos > 0 && newPos < 180){
       myservo.write(newPos);
       oldPos = newPos;
     }
