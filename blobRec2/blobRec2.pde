@@ -1,8 +1,10 @@
 import gab.opencv.*;
+import processing.video.*;
 
-PImage img;
+//PImage img;
 OpenCV opencv;
 Histogram histogram;
+Capture img;
 
 int lowerb = 50;
 int range = 10;
@@ -18,18 +20,25 @@ ArrayList<Contour> contours;
 ArrayList<Contour> polygons;
 
 void setup() {
-  img = loadImage("green.png");
-  opencv = new OpenCV(this, img);
+  //img = loadImage("green.png");
+  //opencv = new OpenCV(this, img);
+  img = new Capture(this, 320, 240);
+  opencv = new OpenCV(this, 320, 240);
+  opencv.useColor(RGB);
+  
   size(opencv.width*2, opencv.height, P2D);
   opencv.useColor(HSB);
+  img.start();
 }
 
 void draw() {
   opencv.loadImage(img);
   
   image(img, 0, 0);  
+  histogram = opencv.findHistogram(opencv.getH(), 255);
   
-  opencv.setGray(opencv.getH().clone());
+  //opencv.setGray(opencv.getH().clone());
+  opencv.gray();
   opencv.inRange(lowerb, lowerb+range);
   for(int i=0; i<erode1;i++){
     opencv.erode();
@@ -96,13 +105,13 @@ void draw() {
     
   }
   
-  histogram = opencv.findHistogram(opencv.getH(), 255);
+  //histogram = opencv.findHistogram(opencv.getH(), 255);
 
   
 
   image(opencv.getOutput(),width/2, 0, width/2,height);
 
-  noStroke(); fill(0);
+  /*noStroke(); fill(0);
   histogram.draw(10, height - 230, 400, 200);
   noFill(); stroke(0);
   line(10, height-30, 410, height-30);
@@ -118,7 +127,7 @@ void draw() {
   ellipse(lb+10, height-30, 3, 3 );
   text(lowerb, lb-10, height-15);
   ellipse(ub+10, height-30, 3, 3 );
-  text(lowerb+range, ub+10, height-15);
+  text(lowerb+range, ub+10, height-15);*/
   
   text("erode 1 (t- y+): " + erode1, 10,10);
   text("dilate 1 (u- i+): " + dilate1, 10,20);
