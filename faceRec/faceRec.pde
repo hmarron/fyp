@@ -17,7 +17,7 @@ void setup() {
   
   String portName = Serial.list()[0];
   serial = new Serial(this, portName, 9600);
-  
+  println(portName);
 }
 
 void draw() {
@@ -33,22 +33,25 @@ void draw() {
   stroke(0, 255, 0);
   strokeWeight(1);
   Rectangle[] faces = opencv.detect();
+  
   if(faces.length > 0){
     rect(faces[0].x, faces[0].y, faces[0].width, faces[0].height);
     float faceCenterX = faces[0].x + (faces[0].width / 2);
     float faceCenterY = faces[0].y + (faces[0].height / 2);
-    println(faceCenterX + "," + faceCenterY);
-    int centerXScaled = Math.round((faceCenterX / 320) * 180);
-    int centerYScaled = Math.round((faceCenterY / 240) * 180);
-    println(centerXScaled + "," + centerYScaled);
+    //println(faceCenterX + "," + faceCenterY);
+    
+    byte centerXScaled = (byte)Math.round((faceCenterX / 320) * 180);
+    byte centerYScaled = (byte)Math.round((faceCenterY / 240) * 180);
+    //println(centerXScaled + "," + centerYScaled);
     serial.write(centerXScaled);
+    //serial.write(centerYScaled);
   }
-  
-  
 }
 
 void captureEvent(Capture c) {
   c.read();
 }
 
-
+void stop(){
+  //serial.clear();
+}
