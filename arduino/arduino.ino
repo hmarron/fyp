@@ -2,32 +2,37 @@
  
 Servo servoX;
 Servo servoY;
-byte oldXPos = 0;
-byte newXPos = 0;
-byte oldYPos = 0;
-byte newYPos = 0;
+int oldXPos = 0;
+int newXPos = 0;
+int oldYPos = 0;
+int newYPos = 0;
+boolean getX = true;
  
 void setup() { 
   Serial.begin(9600);
-  //Serial2.begin(9600);
-  servoX.attach(9);
-  //servoY.attach(10);
+  servoX.attach(10);
+  servoY.attach(9);
 } 
  
 void loop() {   
-    if(Serial.available()){  
-      newXPos = Serial.read();
-      //Serial2.write(newXPos);
-      //newYPos = Serial1.read();
-      if(oldXPos != newXPos && newXPos > 0 && newXPos < 180){
-        servoX.write(newXPos);
-        oldXPos = newXPos;
-      }
-      
-      /*if(oldYPos != newYPos && newYPos > 0 && newYPos < 180){
-        servoY.write(newYPos);
-        oldXPos = newYPos;
-      }*/
+  
+    if(Serial.available()){
+        if(getX){
+          newXPos = Serial.read();
+          
+          if(oldXPos != newXPos && newXPos > 0 && newXPos < 180){
+            servoX.write(newXPos);
+            oldXPos = newXPos;
+          }
+        }else{
+          newYPos = Serial.read();
+          
+          if(oldYPos != newYPos && newYPos > 0 && newYPos < 180){
+            servoY.write(newYPos);
+            oldYPos = newYPos;
+          }
+        }
+        getX = !getX;
     }
     
 } 

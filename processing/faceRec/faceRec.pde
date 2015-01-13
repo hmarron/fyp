@@ -6,6 +6,7 @@ import processing.serial.*;
 Capture video;
 OpenCV opencv;
 Serial serial;
+boolean sendX = true;
 
 void setup() {
   size(320, 240);
@@ -18,6 +19,7 @@ void setup() {
   String portName = Serial.list()[0];
   serial = new Serial(this, portName, 9600);
   println(portName);
+
 }
 
 void draw() {
@@ -42,9 +44,15 @@ void draw() {
     
     byte centerXScaled = (byte)Math.round((faceCenterX / 320) * 180);
     byte centerYScaled = (byte)Math.round((faceCenterY / 240) * 180);
-    //println(centerXScaled + "," + centerYScaled);
-    serial.write(centerXScaled);
-    //serial.write(centerYScaled);
+    println(centerXScaled + "," + centerYScaled);
+    if(sendX){
+      serial.write(centerXScaled);
+    }else{
+      serial.write(centerYScaled);
+    }
+    sendX = !sendX;
+    
+    
   }
 }
 
