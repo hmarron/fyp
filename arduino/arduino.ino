@@ -17,6 +17,7 @@ void setup() {
 void loop() {   
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   
     if(Serial.available()){
           newXPos = Serial.parseInt();
@@ -35,6 +36,8 @@ void loop() {
 =======
 =======
 >>>>>>> parent of d7194cb... Updates for pantilt + face recognition
+=======
+>>>>>>> parent of d7194cb... Updates for pantilt + face recognition
     if(Serial.available()){  
       newXPos = Serial.read();
       //Serial2.write(newXPos);
@@ -49,6 +52,9 @@ void loop() {
         oldXPos = newYPos;
       }*/
 <<<<<<< HEAD
+<<<<<<< HEAD
+>>>>>>> parent of d7194cb... Updates for pantilt + face recognition
+=======
 >>>>>>> parent of d7194cb... Updates for pantilt + face recognition
 =======
 >>>>>>> parent of d7194cb... Updates for pantilt + face recognition
