@@ -9,43 +9,32 @@ byte newYPos = 0;
  
 void setup() { 
   Serial.begin(9600);
-  //Serial2.begin(9600);
   servoX.attach(9);
-  //servoY.attach(10);
+  servoY.attach(10);
 } 
  
 void loop() {   
-
-  
     if(Serial.available()){
-          newXPos = Serial.parseInt();
+          char newPos[2];
+          char newPosX = 0;
+          char newPosY = 0;
+          
+          Serial.readBytes(newPos, 2);
+          //newXPos = Serial.read();
+          newXPos = newPos[1];
+          newYPos = newPos[0];
+          
           
           if(oldXPos != newXPos && newXPos > 0 && newXPos < 180){
             servoX.write(newXPos);
             oldXPos = newXPos;
           }
 
-          newYPos = Serial.parseInt();
+          //newYPos = Serial.read();
           
           if(oldYPos != newYPos && newYPos > 0 && newYPos < 180){
             servoY.write(newYPos);
             oldYPos = newYPos;
           }
-
-    if(Serial.available()){  
-      newXPos = Serial.read();
-      //Serial2.write(newXPos);
-      //newYPos = Serial1.read();
-      if(oldXPos != newXPos && newXPos > 0 && newXPos < 180){
-        servoX.write(newXPos);
-        oldXPos = newXPos;
-      }
-      
-      /*if(oldYPos != newYPos && newYPos > 0 && newYPos < 180){
-        servoY.write(newYPos);
-        oldXPos = newYPos;
-      }*/
-
     }
-    
 } 

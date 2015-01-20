@@ -43,7 +43,10 @@ void draw() {
     byte centerXScaled = (byte)Math.round((faceCenterX / 320) * 180);
     byte centerYScaled = (byte)Math.round((faceCenterY / 240) * 180);
     //println(centerXScaled + "," + centerYScaled);
-    serial.write(centerXScaled);
+    
+    byte out[] = {centerXScaled , centerYScaled};
+    serial.write(out);
+    //serial.write(centerXScaled);
     //serial.write(centerYScaled);
   }
 }
