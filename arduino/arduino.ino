@@ -2,19 +2,20 @@
  
 Servo servoX;
 Servo servoY;
-int oldXPos = 0;
-int newXPos = 0;
-int oldYPos = 0;
-int newYPos = 0;
-boolean getX = true;
+byte oldXPos = 0;
+byte newXPos = 0;
+byte oldYPos = 0;
+byte newYPos = 0;
  
 void setup() { 
   Serial.begin(9600);
-  servoX.attach(10);
-  servoY.attach(9);
+  //Serial2.begin(9600);
+  servoX.attach(9);
+  //servoY.attach(10);
 } 
  
 void loop() {   
+<<<<<<< HEAD
   
     if(Serial.available()){
           newXPos = Serial.parseInt();
@@ -30,6 +31,21 @@ void loop() {
             servoY.write(newYPos);
             oldYPos = newYPos;
           }
+=======
+    if(Serial.available()){  
+      newXPos = Serial.read();
+      //Serial2.write(newXPos);
+      //newYPos = Serial1.read();
+      if(oldXPos != newXPos && newXPos > 0 && newXPos < 180){
+        servoX.write(newXPos);
+        oldXPos = newXPos;
+      }
+      
+      /*if(oldYPos != newYPos && newYPos > 0 && newYPos < 180){
+        servoY.write(newYPos);
+        oldXPos = newYPos;
+      }*/
+>>>>>>> parent of d7194cb... Updates for pantilt + face recognition
     }
     
 } 

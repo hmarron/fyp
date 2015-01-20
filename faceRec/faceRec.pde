@@ -7,7 +7,6 @@ import java.nio.ByteBuffer;
 Capture video;
 OpenCV opencv;
 Serial serial;
-boolean sendX = true;
 
 void setup() {
   size(320, 240);
@@ -20,7 +19,6 @@ void setup() {
   String portName = Serial.list()[0];
   serial = new Serial(this, portName, 9600);
   println(portName);
-
 }
 
 void draw() {
@@ -43,6 +41,7 @@ void draw() {
     float faceCenterY = faces[0].y + (faces[0].height / 2);
     //println(faceCenterX + "," + faceCenterY);
     
+<<<<<<< HEAD:processing/faceRec/faceRec.pde
     int centerXScaled = (int)Math.round((faceCenterX / 320) * 180);
     int centerYScaled = (int)Math.round((faceCenterY / 240) * 180);
     println(centerXScaled + "," + centerYScaled);
@@ -52,6 +51,13 @@ void draw() {
     
     
     
+=======
+    byte centerXScaled = (byte)Math.round((faceCenterX / 320) * 180);
+    byte centerYScaled = (byte)Math.round((faceCenterY / 240) * 180);
+    //println(centerXScaled + "," + centerYScaled);
+    serial.write(centerXScaled);
+    //serial.write(centerYScaled);
+>>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
   }
 }
 
