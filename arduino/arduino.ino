@@ -17,22 +17,19 @@ void setup() {
 void loop() {   
   
     if(Serial.available()){
-        if(getX){
-          newXPos = Serial.read();
+          newXPos = Serial.parseInt();
           
           if(oldXPos != newXPos && newXPos > 0 && newXPos < 180){
             servoX.write(newXPos);
             oldXPos = newXPos;
           }
-        }else{
-          newYPos = Serial.read();
+
+          newYPos = Serial.parseInt();
           
           if(oldYPos != newYPos && newYPos > 0 && newYPos < 180){
             servoY.write(newYPos);
             oldYPos = newYPos;
           }
-        }
-        getX = !getX;
     }
     
 } 

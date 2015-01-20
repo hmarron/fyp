@@ -2,6 +2,7 @@ import gab.opencv.*;
 import processing.video.*;
 import java.awt.*;
 import processing.serial.*;
+import java.nio.ByteBuffer;
 
 Capture video;
 OpenCV opencv;
@@ -42,15 +43,13 @@ void draw() {
     float faceCenterY = faces[0].y + (faces[0].height / 2);
     //println(faceCenterX + "," + faceCenterY);
     
-    byte centerXScaled = (byte)Math.round((faceCenterX / 320) * 180);
-    byte centerYScaled = (byte)Math.round((faceCenterY / 240) * 180);
+    int centerXScaled = (int)Math.round((faceCenterX / 320) * 180);
+    int centerYScaled = (int)Math.round((faceCenterY / 240) * 180);
     println(centerXScaled + "," + centerYScaled);
-    if(sendX){
-      serial.write(centerXScaled);
-    }else{
-      serial.write(centerYScaled);
-    }
-    sendX = !sendX;
+    
+    serial.write(intToByteArray(centerXScaled));
+    serial.write(intToByteArray(centerYScaled));
+    
     
     
   }
@@ -60,6 +59,6 @@ void captureEvent(Capture c) {
   c.read();
 }
 
-void stop(){
-  //serial.clear();
+byte[] intToByteArray(int i){
+  return ByteBuffer.allocate(4).putInt(i).array();
 }
