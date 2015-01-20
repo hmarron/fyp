@@ -43,6 +43,7 @@ void draw() {
     
 <<<<<<< HEAD:faceRec/faceRec.pde
 <<<<<<< HEAD:faceRec/faceRec.pde
+<<<<<<< HEAD:faceRec/faceRec.pde
 <<<<<<< HEAD:processing/faceRec/faceRec.pde
     int centerXScaled = (int)Math.round((faceCenterX / 320) * 180);
     int centerYScaled = (int)Math.round((faceCenterY / 240) * 180);
@@ -58,6 +59,8 @@ void draw() {
 >>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
 =======
 >>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
+=======
+>>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
     byte centerXScaled = (byte)Math.round((faceCenterX / 320) * 180);
     byte centerYScaled = (byte)Math.round((faceCenterY / 240) * 180);
     //println(centerXScaled + "," + centerYScaled);
@@ -65,6 +68,9 @@ void draw() {
     //serial.write(centerYScaled);
 <<<<<<< HEAD:faceRec/faceRec.pde
 <<<<<<< HEAD:faceRec/faceRec.pde
+<<<<<<< HEAD:faceRec/faceRec.pde
+>>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
+=======
 >>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
 =======
 >>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
