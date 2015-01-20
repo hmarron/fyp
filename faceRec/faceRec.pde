@@ -2,7 +2,6 @@ import gab.opencv.*;
 import processing.video.*;
 import java.awt.*;
 import processing.serial.*;
-import java.nio.ByteBuffer;
 
 Capture video;
 OpenCV opencv;
@@ -41,41 +40,11 @@ void draw() {
     float faceCenterY = faces[0].y + (faces[0].height / 2);
     //println(faceCenterX + "," + faceCenterY);
     
-<<<<<<< HEAD:faceRec/faceRec.pde
-<<<<<<< HEAD:faceRec/faceRec.pde
-<<<<<<< HEAD:faceRec/faceRec.pde
-<<<<<<< HEAD:processing/faceRec/faceRec.pde
-    int centerXScaled = (int)Math.round((faceCenterX / 320) * 180);
-    int centerYScaled = (int)Math.round((faceCenterY / 240) * 180);
-    println(centerXScaled + "," + centerYScaled);
-    
-    serial.write(intToByteArray(centerXScaled));
-    serial.write(intToByteArray(centerYScaled));
-    
-    
-    
-=======
-=======
->>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
-=======
->>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
-=======
->>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
     byte centerXScaled = (byte)Math.round((faceCenterX / 320) * 180);
     byte centerYScaled = (byte)Math.round((faceCenterY / 240) * 180);
     //println(centerXScaled + "," + centerYScaled);
     serial.write(centerXScaled);
     //serial.write(centerYScaled);
-<<<<<<< HEAD:faceRec/faceRec.pde
-<<<<<<< HEAD:faceRec/faceRec.pde
-<<<<<<< HEAD:faceRec/faceRec.pde
->>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
-=======
->>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
-=======
->>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
-=======
->>>>>>> parent of d7194cb... Updates for pantilt + face recognition:faceRec/faceRec.pde
   }
 }
 
@@ -83,6 +52,6 @@ void captureEvent(Capture c) {
   c.read();
 }
 
-byte[] intToByteArray(int i){
-  return ByteBuffer.allocate(4).putInt(i).array();
+void stop(){
+  //serial.clear();
 }
