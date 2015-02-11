@@ -14,30 +14,37 @@ boolean running = false;
 
 int moveSpeedAngle = 1;
 int moveSpeedDelay = 100;
-int currentDir = 5;
+int currentX = 5;
+int currentY = 5;
 int posX = 90;
 int posY = 90;
 
 int searchY = 90;
-int searchSpeed = 50;
+int searchSpeed = 10;
 boolean searchDir = false;
 
-void turn(int dir){
-  if(dir == TURN_LEFT){
+void turn(int x, int y){
+  if(x == TURN_LEFT){
     posX -= moveSpeedAngle;
     delay(moveSpeedDelay);
-  }else if(dir == TURN_RIGHT){
+  }else if(x == TURN_RIGHT){
     posX += moveSpeedAngle;
     delay(moveSpeedDelay);
-  }else if(dir == TURN_UP){
+  }else if(x == STOP){
+    
+  }
+  
+  if(y == TURN_UP){
     posY -= moveSpeedAngle;
     delay(moveSpeedDelay);
-  }else if(dir == TURN_DOWN){
+  }else if(y == TURN_DOWN){
     posY += moveSpeedAngle;
     delay(moveSpeedDelay);
-  }else if(dir == STOP){
+  }else if(y == STOP){
     
-  }else if(dir == SEARCH){
+  }
+  
+  if(x == SEARCH || y == SEARCH){
     search();
   }
   servoX.write(posX);
@@ -83,14 +90,17 @@ void setup() {
 } 
  
 void loop() {
-  turn(currentDir);
+  turn(currentX,currentY);
 } 
 
 void serialEvent() {
   if(Serial.available()){
-    byte input = Serial.read();
-    currentDir = input;
-    turn(input);
+    char input[2];
+    Serial.readBytes(input, 2);
+    //byte input = Serial.read();
+    currentX = input[0];
+    currentY = input[1];
+    turn(input[0],input[1]);
   }
   delay(1);
 }

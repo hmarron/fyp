@@ -1,10 +1,9 @@
 import gab.opencv.*;
 import processing.video.*;
 
-//PImage img;
 OpenCV opencv;
 Histogram histogram;
-Capture img;
+Capture video;
 
 int lowerb = 50;
 int range = 10;
@@ -20,24 +19,29 @@ ArrayList<Contour> contours;
 ArrayList<Contour> polygons;
 
 void setup() {
-  //img = loadImage("green.png");
-  //opencv = new OpenCV(this, img);
-  img = new Capture(this, 320, 240);
+
+  video = new Capture(this, 320, 240);
   opencv = new OpenCV(this, 320, 240);
   opencv.useColor(RGB);
   
   size(opencv.width*2, opencv.height, P2D);
   opencv.useColor(HSB);
-  img.start();
+  video.start();
 }
 
 void draw() {
-  opencv.loadImage(img);
+ 
+  opencv.loadImage(video);
   
-  image(img, 0, 0);  
+  image(video, 0, 0); 
+  
+  pushMatrix();
+  scale(1.0, -1.0);
+  image(video, 0, -video.height );
+  popMatrix();
+  
   histogram = opencv.findHistogram(opencv.getH(), 255);
   
-  //opencv.setGray(opencv.getH().clone());
   opencv.gray();
   opencv.inRange(lowerb, lowerb+range);
   for(int i=0; i<erode1;i++){
@@ -105,29 +109,8 @@ void draw() {
     
   }
   
-  //histogram = opencv.findHistogram(opencv.getH(), 255);
-
-  
-
+  opencv.flip(0);
   image(opencv.getOutput(),width/2, 0, width/2,height);
-
-  /*noStroke(); fill(0);
-  histogram.draw(10, height - 230, 400, 200);
-  noFill(); stroke(0);
-  line(10, height-30, 410, height-30);
-
-  text("Hue", 10, height - (textAscent() + textDescent()));
-
-  float lb = map(lowerb, 0, 255, 0, 400);
-  float ub = map(lowerb+range, 0, 255, 0, 400);
-
-  stroke(255, 0, 0); fill(255, 0, 0);
-  strokeWeight(2);
-  line(lb + 10, height-30, ub +10, height-30);
-  ellipse(lb+10, height-30, 3, 3 );
-  text(lowerb, lb-10, height-15);
-  ellipse(ub+10, height-30, 3, 3 );
-  text(lowerb+range, ub+10, height-15);*/
   
   text("erode 1 (t- y+): " + erode1, 10,10);
   text("dilate 1 (u- i+): " + dilate1, 10,20);
@@ -135,7 +118,9 @@ void draw() {
   text("dilate 2 (j- k+): " + dilate2, 10,40);
   text("edges (x): " + findEdges, 10,50);
   text("contours (z): " + findContours, 10,60);
-  
+  text("lowerb:" + lowerb,10,70);
+  text("upperb:" + (lowerb + range),10,80);
+  text("range:" + range,10,90);
 }
 
 void keyPressed() {
@@ -174,4 +159,23 @@ void keyPressed() {
   } else if (key == 'x'){
     findEdges = !findEdges;
   }
+  
+  if (key == 'p'){
+    saveConfig();
+  }
+}
+
+void saveConfig(){
+  JSONObject json = new JSONObject();
+
+  json.setInt("lowerb", lowerb);
+  json.setInt("range", range);
+  json.setInt("erode1", erode1);
+  json.setInt("dilate1", dilate1);
+  json.setInt("erode2", erode2);
+  json.setInt("dilate2", dilate2);
+  json.setBoolean("edges", findEdges);
+  json.setBoolean("contours", findContours);
+
+  saveJSONObject(json, "data/config.json");
 }
