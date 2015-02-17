@@ -1,9 +1,10 @@
 import gab.opencv.*;
 import processing.video.*;
+import controlP5.*;
 
 OpenCV opencv;
-Histogram histogram;
 Capture video;
+ControlP5 controller;
 
 int lowerb = 50;
 int range = 10;
@@ -18,29 +19,44 @@ boolean findContours = false;
 ArrayList<Contour> contours;
 ArrayList<Contour> polygons;
 
-void setup() {
+String saveFile = "";
 
+void setup() {
+  controller = new ControlP5(this);
+  controller.addSlider("lowerb",0,255,0,10,250,100,10);
+  controller.addSlider("range",0,255,0,10,270,100,10);
+  controller.addSlider("erode1",0,10,0,10,290,100,10);
+  controller.addSlider("dilate1",0,10,0,10,310,100,10);
+  controller.addSlider("erode2",0,10,0,10,330,100,10);
+  controller.addSlider("dilate2",0,10,0,10,350,100,10);
+  
+  controller.addButton("Edges_On",10,260,250,80,20);
+  controller.addButton("Edges_Off",10,350,250,80,20);
+  controller.addButton("Contours_On",10,260,280,80,20);
+  controller.addButton("Contours_Off",10,350,280,80,20);
+  
+  controller.addTextfield("saveFile").setPosition(260,320).setSize(200,20);
+  
+  controller.addButton("Save",10,260,360,80,20);
+  
   video = new Capture(this, 320, 240);
   opencv = new OpenCV(this, 320, 240);
-  opencv.useColor(RGB);
   
-  size(opencv.width*2, opencv.height, P2D);
+  size(opencv.width*2, opencv.height+150, P2D);
   opencv.useColor(HSB);
   video.start();
 }
 
 void draw() {
- 
+  background(0);
   opencv.loadImage(video);
   
   image(video, 0, 0); 
   
   pushMatrix();
   scale(1.0, -1.0);
-  image(video, 0, -video.height );
+  image(video, 0, -video.height);
   popMatrix();
-  
-  histogram = opencv.findHistogram(opencv.getH(), 255);
   
   opencv.gray();
   opencv.inRange(lowerb, lowerb+range);
@@ -94,7 +110,6 @@ void draw() {
           smallY = point;
         }
       }
-      
     }
     
      //aproximate rectangle
@@ -106,66 +121,13 @@ void draw() {
       vertex(smallX.x, smallX.y);
       vertex(smallY.x, smallY.y);
       endShape();
-    
   }
   
   opencv.flip(0);
-  image(opencv.getOutput(),width/2, 0, width/2,height);
-  
-  text("erode 1 (t- y+): " + erode1, 10,10);
-  text("dilate 1 (u- i+): " + dilate1, 10,20);
-  text("erode 2 (g- h+): " + erode2, 10,30);
-  text("dilate 2 (j- k+): " + dilate2, 10,40);
-  text("edges (x): " + findEdges, 10,50);
-  text("contours (z): " + findContours, 10,60);
-  text("lowerb:" + lowerb,10,70);
-  text("upperb:" + (lowerb + range),10,80);
-  text("range:" + range,10,90);
+  image(opencv.getOutput(),width/2, 0, width/2,height/2);
 }
 
-void keyPressed() {
-  if (key == 'w') {
-    range++;
-  } else if (key == 's'){
-    range--;
-  } else if (key == 'a'){
-    lowerb--;
-  } else if (key == 'd'){
-    lowerb++;
-  } 
-  
-  if (key == 'y'){
-    erode1++;
-  } else if (key == 't'){
-    erode1--;
-  } else if (key == 'h'){
-    erode2++;
-  } else if (key == 'g'){
-    erode2--;
-  }
-  
-  if (key == 'i'){
-    dilate1++;
-  } else if (key == 'u'){
-    dilate1--;
-  } else if (key == 'k'){
-    dilate2++;
-  } else if (key == 'j'){
-    dilate2--;
-  }
-  
-  if (key == 'z'){
-    findContours = !findContours;
-  } else if (key == 'x'){
-    findEdges = !findEdges;
-  }
-  
-  if (key == 'p'){
-    saveConfig();
-  }
-}
-
-void saveConfig(){
+void saveConfig(String filename){
   JSONObject json = new JSONObject();
 
   json.setInt("lowerb", lowerb);
@@ -174,8 +136,28 @@ void saveConfig(){
   json.setInt("dilate1", dilate1);
   json.setInt("erode2", erode2);
   json.setInt("dilate2", dilate2);
-  json.setBoolean("edges", findEdges);
-  json.setBoolean("contours", findContours);
+  json.setBoolean("edges", true);
+  json.setBoolean("contours", true);
 
-  saveJSONObject(json, "data/config.json");
+  saveJSONObject(json, "data/"+filename+".json");
+}
+
+void Edges_On(){
+  findEdges = true;
+}
+
+void Edges_Off(){
+  findEdges = false;
+}
+
+void Contours_On(){
+  findContours = true;
+}
+
+void Contours_Off(){
+  findContours = false;
+}
+
+void Save(){
+  saveConfig(controller.get(Textfield.class,"saveFile").getText());
 }

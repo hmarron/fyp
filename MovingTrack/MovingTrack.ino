@@ -13,7 +13,7 @@ Servo servoY;
 boolean running = false;
 
 int moveSpeedAngle = 1;
-int moveSpeedDelay = 100;
+int moveSpeedDelay = 500;
 int currentX = 5;
 int currentY = 5;
 int posX = 90;
@@ -100,7 +100,7 @@ void serialEvent() {
     //byte input = Serial.read();
     currentX = input[0];
     currentY = input[1];
-    turn(input[0],input[1]);
+    turn(currentX,currentY);
   }
   delay(1);
 }

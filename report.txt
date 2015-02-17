@@ -1,0 +1,34 @@
+----fyp----
+-----------
+
+--current products--
+-microsoft kinect
+-sony playstation move
+-cmu pixycam
+-opencv
+-israel iron dome
+
+--products used--
+-arduino
+-opencv port for processing
+-c (arduino)
+-java (processing)
+-servo motors
+-json
+
+--program--
+-open cv blob recognition
+ -dilation
+ -erosion
+ -restrict colour
+-processing blob configuration
+ -json
+ -open cv
+
+-stationary camera
+ -face detection
+
+-difference between stationary and moving camera
+
+-mounting camera
+-flipping camera code
