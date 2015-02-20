@@ -17,6 +17,9 @@ int dilate2 = 0;
 int numContours = 0;
 int accuracy = 50;
 
+int iterations = 0;
+int i = 5;
+
 Command currentCommands[] = {Command.STOP,Command.STOP};
 Command previousCommands[] = {Command.STOP,Command.STOP};
 boolean findEdges = false;
@@ -126,17 +129,16 @@ void draw() {
 
   
   //if(currentCommands[0] != previousCommands[0] || currentCommands[1] != previousCommands[1]){
+  if(i == iterations){  
+    //serial.clear();
     int code = (currentCommands[0].getCode() * 10) + currentCommands[1].getCode(); 
     serial.write(code);
     println(code);
     previousCommands[0] = currentCommands[0];
     previousCommands[1] = currentCommands[1];
-    
-  //}
-  try{
-    wait(100);
-  }catch(Exception e){
-    
+    iterations = 0;
+  }else{
+    iterations++;
   }
 
   

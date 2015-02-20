@@ -54,13 +54,18 @@ void setup() {
 
 void loop() {
   if(Serial.available()){
-    while(Serial.available() > 1){
-      Serial.read();
-    }
     int currentXY = Serial.read();
     currentY = currentXY % 10;
     currentX = currentXY / 10;
     turn(currentX,currentY);
+    
   }
+  serialFlush();
   delay(1);
 } 
+
+void serialFlush(){
+  while(Serial.available() > 0) {
+    char t = Serial.read();
+  }
+}   
