@@ -124,13 +124,20 @@ void draw() {
     currentCommands[1] = Command.STOP;
   }
 
+  
   //if(currentCommands[0] != previousCommands[0] || currentCommands[1] != previousCommands[1]){
-    println((currentCommands[0].getCode() * 10) + currentCommands[1].getCode());
-    serial.write((currentCommands[0].getCode() * 10) + currentCommands[1].getCode());
+    int code = (currentCommands[0].getCode() * 10) + currentCommands[1].getCode(); 
+    serial.write(code);
+    println(code);
     previousCommands[0] = currentCommands[0];
     previousCommands[1] = currentCommands[1];
     
   //}
+  try{
+    wait(100);
+  }catch(Exception e){
+    
+  }
 
   
   image(opencv.getOutput(),width/2, 0, width/2,height/2);

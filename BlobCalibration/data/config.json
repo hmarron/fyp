@@ -2,7 +2,7 @@
   "contours": true,
   "edges": true,
   "dilate2": 0,
-  "range": 10,
+  "range": 2,
   "dilate1": 0,
   "erode1": 0,
   "erode2": 0,

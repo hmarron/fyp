@@ -10,10 +10,12 @@
 Servo servoX;
 Servo servoY;
 
+boolean running = false;
+
 int moveSpeedAngle = 1;
-int moveSpeedDelay = 300;
-int currentX = STOP;
-int currentY = STOP;
+int moveSpeedDelay = 500;
+int currentX = 5;
+int currentY = 5;
 int posX = 90;
 int posY = 90;
 
@@ -37,11 +39,10 @@ void turn(int x, int y){
   }else if(y == STOP){
     
   }
-  
+
   servoX.write(posX);
   servoY.write(posY);
 }
-
 
 void setup() { 
   Serial.begin(9600);
@@ -53,10 +54,9 @@ void setup() {
 
 void loop() {
   if(Serial.available()){
-    //while(Serial.available() > 2){
-      //Serial.read();
-    //}
-    
+    while(Serial.available() > 1){
+      Serial.read();
+    }
     int currentXY = Serial.read();
     currentY = currentXY % 10;
     currentX = currentXY / 10;
@@ -64,4 +64,3 @@ void loop() {
   }
   delay(1);
 } 
-
