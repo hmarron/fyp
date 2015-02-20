@@ -124,13 +124,13 @@ void draw() {
     currentCommands[1] = Command.STOP;
   }
 
-  
-  if(currentCommands[0] != previousCommands[0] || currentCommands[1] != previousCommands[1]){
-    serial.write(currentCommands[0].getCode());
+  //if(currentCommands[0] != previousCommands[0] || currentCommands[1] != previousCommands[1]){
+    println((currentCommands[0].getCode() * 10) + currentCommands[1].getCode());
+    serial.write((currentCommands[0].getCode() * 10) + currentCommands[1].getCode());
     previousCommands[0] = currentCommands[0];
-    serial.write(currentCommands[1].getCode());
     previousCommands[1] = currentCommands[1];
-  }
+    
+  //}
 
   
   image(opencv.getOutput(),width/2, 0, width/2,height/2);
@@ -180,21 +180,4 @@ PVector getCentroid(ArrayList<PVector> vertices){
     totalY += vertex.y;
   }
   return new PVector(totalX/count,totalY/count);
-}
-
-void keyPressed() {
-  println(key);
-  if(key == 'a'){
-    serial.write(Command.LEFT.getCode());
-  }else if(key == 'd'){
-    serial.write(Command.RIGHT.getCode());
-  }else if(key == 'w'){
-    serial.write(Command.UP.getCode());
-  }else if(key == 's'){
-    serial.write(Command.DOWN.getCode());
-  }else if(key == 'z'){
-    serial.write(Command.STOP.getCode());
-  }else if(key == 'x'){
-    serial.write(Command.SEARCH.getCode());
-  }
 }
