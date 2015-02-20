@@ -50,12 +50,12 @@ void setup() {
   servoX.write(posX);
   servoY.write(posY);
 } 
- 
+
 void loop() {
   if(Serial.available()){
-    while(Serial.available() > 1){
-      Serial.read();
-    }
+    //while(Serial.available() > 2){
+      //Serial.read();
+    //}
     
     int currentXY = Serial.read();
     currentY = currentXY % 10;

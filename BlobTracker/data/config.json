@@ -1,10 +1,10 @@
 {
   "contours": true,
   "edges": true,
-  "dilate2": 6,
-  "range": 20,
-  "dilate1": 3,
-  "erode1": 2,
-  "erode2": 5,
-  "lowerb": 40
+  "dilate2": 0,
+  "range": 10,
+  "dilate1": 0,
+  "erode1": 0,
+  "erode2": 0,
+  "lowerb": 5
 }
